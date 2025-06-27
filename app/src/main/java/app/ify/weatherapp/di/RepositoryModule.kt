@@ -1,5 +1,8 @@
 package app.ify.weatherapp.di
 
+import app.ify.weatherapp.repo.WeatherRepository
+import app.ify.weatherapp.repo.WeatherRepositoryImpl
+import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -11,7 +14,15 @@ import javax.inject.Singleton
 // Helps Hilt know how to bind interfaces to their
 // implementations
 
- @Module
- @InstallIn(SingletonComponent::class)
+ @Module  // a provider of dependencies
+ @InstallIn(SingletonComponent::class) // Lives for whole app
  abstract class RepositoryModule {
+
+  // @Binds: tells Hilt which implementation to use for an interface
+  // @Singleton: Makes sure there's only one instance throughout the app
+  @Binds
+  @Singleton
+  abstract fun bindWeatherRepository(
+   weatherRepositoryImpl: WeatherRepositoryImpl
+  ): WeatherRepository
 }
